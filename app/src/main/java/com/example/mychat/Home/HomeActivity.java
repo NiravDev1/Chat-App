@@ -35,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
         binding.userRecyclerview.setAdapter(userslistAdapter);
         binding.userRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        databaseReference.keepSynced(true);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

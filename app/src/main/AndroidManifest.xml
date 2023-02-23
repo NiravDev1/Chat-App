@@ -14,6 +14,10 @@
         android:theme="@style/Theme.MyChat"
         tools:targetApi="31">
         <activity
+            android:name=".Home.ChatActivity"
+            android:exported="false"
+            android:parentActivityName=".Home.HomeActivity"/>
+        <activity
             android:name=".Home.HomeActivity"
             android:exported="false" />
         <activity
