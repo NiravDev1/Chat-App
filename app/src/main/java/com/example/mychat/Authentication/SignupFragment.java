@@ -1,4 +1,4 @@
-package com.example.mychat;
+package com.example.mychat.Authentication;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.mychat.R;
 import com.example.mychat.databinding.FragmentSignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,6 +73,7 @@ public class SignupFragment extends Fragment {
     }
 
     FragmentSignupBinding signupBinding;
+
     String Name, Email, Phone, Password, CPassword;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     Dialog dialog;
@@ -153,7 +154,7 @@ public class SignupFragment extends Fragment {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     String Uid = task.getResult().getUser().getUid();
-                    UserModelClass userModelClass = new UserModelClass(Uid, email, name, phone, cPassword);
+                    UserModelClass userModelClass = new UserModelClass(Uid,name,email,phone,cPassword);
                     reference.child("Users").child(Uid).setValue(userModelClass);
                     Toast.makeText(getContext(), "auth successfully", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();

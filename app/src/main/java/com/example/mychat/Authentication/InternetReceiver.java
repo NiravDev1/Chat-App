@@ -1,10 +1,7 @@
-package com.example.mychat;
+package com.example.mychat.Authentication;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.widget.Toast;
 

@@ -1,6 +1,7 @@
-package com.example.mychat;
+package com.example.mychat.Authentication;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.mychat.Home.HomeActivity;
+import com.example.mychat.R;
 import com.example.mychat.databinding.FragmentLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -70,36 +73,31 @@ public class LoginFragment extends Fragment {
     }
 
     FragmentLoginBinding loginBinding;
-    String Email,Password;
-    FirebaseAuth auth=FirebaseAuth.getInstance();
+    String Email, Password;
+    FirebaseAuth auth = FirebaseAuth.getInstance();
     Dialog dialog;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         loginBinding = FragmentLoginBinding.inflate(inflater, container, false);
-         dialog=new Dialog(getContext());
+        dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.loadinglayout);
         dialog.setCancelable(false);
         loginBinding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Email=loginBinding.emailLogin.getEditText().getText().toString().trim();
-                Password=loginBinding.passwordLogin.getEditText().getText().toString().trim();
-                if (Email.isEmpty()||Password.isEmpty())
-                {
+                Email = loginBinding.emailLogin.getEditText().getText().toString().trim();
+                Password = loginBinding.passwordLogin.getEditText().getText().toString().trim();
+                if (Email.isEmpty() || Password.isEmpty()) {
                     Toast.makeText(getContext(), "fill the fields", Toast.LENGTH_SHORT).show();
-                }
-                else if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches())
-                {
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
                     Toast.makeText(getContext(), "Please Enter vaild Email", Toast.LENGTH_SHORT).show();
-                }
-                else if (Password.length()<8)
-                {
+                } else if (Password.length() < 8) {
                     Toast.makeText(getContext(), "Password must content 8 Character or more", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    CheckEmail(Email,Password);
+                } else {
+                    CheckEmail(Email, Password);
                 }
 
             }
@@ -108,9 +106,9 @@ public class LoginFragment extends Fragment {
         loginBinding.forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager=getFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.auh_framlayout,new ForgotPasswordFragment());
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.auh_framlayout, new ForgotPasswordFragment());
                 fragmentTransaction.addToBackStack(String.valueOf(new LoginFragment()));
                 fragmentTransaction.commit();
             }
@@ -121,9 +119,9 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                FragmentManager fragmentManager=getFragmentManager();
-                FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.auh_framlayout,new SignupFragment());
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.auh_framlayout, new SignupFragment());
                 fragmentTransaction.addToBackStack(String.valueOf(new LoginFragment()));
                 fragmentTransaction.commit();
 
@@ -138,36 +136,32 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
                 boolean ce = task.getResult().getSignInMethods().isEmpty();
-                if (ce)
-                {
+                if (ce) {
                     Toast.makeText(getContext(), "This email is new please create new account", Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    UserLogin(email,password);
+                } else {
+                    UserLogin(email, password);
                     dialog.show();
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Error::"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error::" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
     }
 
     private void UserLogin(String email, String password) {
-        auth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful())
-                {
+                if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "login successful", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                }
-                else
-                {
+                    startActivity(new Intent(getContext(), HomeActivity.class));
+                    getActivity().finish();
+                } else {
                     Toast.makeText(getContext(), "Login fail", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
@@ -175,7 +169,7 @@ public class LoginFragment extends Fragment {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Error::"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error::" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

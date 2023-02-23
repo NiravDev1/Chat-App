@@ -1,7 +1,10 @@
-package com.example.mychat;
+package com.example.mychat.Authentication;
 
 public class UserModelClass {
     private String UserId,UserName,UserEmail,UserPhone,UserPassword;
+
+    public UserModelClass() {
+    }
 
     public UserModelClass(String userId, String userName, String userEmail, String userPhone, String userPassword) {
         UserId = userId;
@@ -11,8 +14,6 @@ public class UserModelClass {
         UserPassword = userPassword;
     }
 
-    public UserModelClass() {
-    }
 
     public String getUserId() {
         return UserId;

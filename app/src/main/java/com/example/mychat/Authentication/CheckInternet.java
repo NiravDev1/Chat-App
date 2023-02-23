@@ -1,4 +1,4 @@
-package com.example.mychat;
+package com.example.mychat.Authentication;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

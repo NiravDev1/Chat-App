@@ -1,14 +1,13 @@
-package com.example.mychat;
+package com.example.mychat.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
-import android.widget.FrameLayout;
 
+import com.example.mychat.R;
 import com.example.mychat.databinding.ActivityMainBinding;
 
 public class AuthActivity extends AppCompatActivity {
@@ -24,10 +23,10 @@ public class AuthActivity extends AppCompatActivity {
 
 
 
-        broadcastReceiver= new InternetReceiver();
-        Internetsatatus();
+//        broadcastReceiver= new InternetReceiver();
+//        Internetsatatus();
         getSupportFragmentManager().beginTransaction().replace(R.id.auh_framlayout ,new LoginFragment()).commit();
-
+//
 
 
 
@@ -41,6 +40,6 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        unregisterReceiver(broadcastReceiver );
+//        unregisterReceiver(broadcastReceiver);
     }
 }

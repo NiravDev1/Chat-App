@@ -14,10 +14,10 @@
         android:theme="@style/Theme.MyChat"
         tools:targetApi="31">
         <activity
-            android:name=".HomeActivity"
+            android:name=".Home.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".AuthActivity"
+            android:name=".Authentication.AuthActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
