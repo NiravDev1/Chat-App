@@ -1,7 +1,9 @@
 package com.example.mychat.Authentication;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -85,6 +87,7 @@ public class LoginFragment extends Fragment {
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.loadinglayout);
         dialog.setCancelable(false);
+
         loginBinding.loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,6 +162,10 @@ public class LoginFragment extends Fragment {
                 if (task.isSuccessful()) {
                     Toast.makeText(getContext(), "login successful", Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
+                    SharedPreferences pre = getActivity().getSharedPreferences("auth", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = pre.edit();
+                    editor.putBoolean("flag", true);
+                    editor.commit();
                     startActivity(new Intent(getContext(), HomeActivity.class));
                     getActivity().finish();
                 } else {

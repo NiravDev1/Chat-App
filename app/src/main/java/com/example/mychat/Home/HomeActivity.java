@@ -45,7 +45,7 @@ public class HomeActivity extends AppCompatActivity {
                         String uid=dataSnapshot.getKey();
                         if (!uid.equals(FirebaseAuth.getInstance().getUid()))
                         {
-                            System.out.println(dataSnapshot);
+
                             UserModelClass userModelClass=dataSnapshot.getValue(UserModelClass.class);
                             userslistAdapter.add(userModelClass);
 

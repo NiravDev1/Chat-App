@@ -1,19 +1,19 @@
 package com.example.mychat.Authentication;
 
 public class UserModelClass {
-    private String UserId,UserName,UserEmail,UserPhone,UserPassword;
+    private String UserId,UserName,UserEmail,UserPhone,UserPassword,UserProfile;
 
-    public UserModelClass() {
-    }
-
-    public UserModelClass(String userId, String userName, String userEmail, String userPhone, String userPassword) {
+    public UserModelClass(String userId, String userName, String userEmail, String userPhone, String userPassword, String userProfile) {
         UserId = userId;
         UserName = userName;
         UserEmail = userEmail;
         UserPhone = userPhone;
         UserPassword = userPassword;
+        UserProfile = userProfile;
     }
 
+    public UserModelClass() {
+    }
 
     public String getUserId() {
         return UserId;
@@ -53,5 +53,13 @@ public class UserModelClass {
 
     public void setUserPassword(String userPassword) {
         UserPassword = userPassword;
+    }
+
+    public String getUserProfile() {
+        return UserProfile;
+    }
+
+    public void setUserProfile(String userProfile) {
+        UserProfile = userProfile;
     }
 }

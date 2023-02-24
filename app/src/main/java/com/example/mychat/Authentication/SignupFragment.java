@@ -1,9 +1,19 @@
 package com.example.mychat.Authentication;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -18,12 +28,25 @@ import com.example.mychat.R;
 import com.example.mychat.databinding.FragmentSignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
+
+import java.io.InputStream;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -77,7 +100,10 @@ public class SignupFragment extends Fragment {
     String Name, Email, Phone, Password, CPassword;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     Dialog dialog;
-    DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
+    Uri uri;
+    Bitmap bitmap;
+
+    String Uid = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -87,6 +113,60 @@ public class SignupFragment extends Fragment {
         dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.loadinglayout);
         dialog.setCancelable(false);
+
+
+        signupBinding.userProfileSign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                imageselect();
+                Dexter.withContext(getActivity())
+                        .withPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                        .withListener(new PermissionListener() {
+                            @Override
+                            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+
+
+
+
+                            }
+
+                            @Override
+                            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+
+                            }
+
+                            @Override
+                            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+                                permissionToken.continuePermissionRequest();
+
+
+                            }
+                        }).check();
+
+            }
+
+            public void imageselect() {
+//                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                    // TODO: Consider calling
+//                    //    ActivityCompat#requestPermissions
+//                    // here to request the missing permissions, and then overriding
+//                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+//                    //                                          int[] grantResults)
+//                    // to handle the case where the user grants the permission. See the documentation
+//                    // for ActivityCompat#requestPermissions for more details.
+//                    return;
+//                }
+                Toast.makeText(getContext(), "Select image", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(intent, 1);
+            }
+        });
+
+
         signupBinding.ToLoginF.setOnClickListener(new View.OnClickListener() { ///to login fragments
             @Override
             public void onClick(View v) {
@@ -132,6 +212,7 @@ public class SignupFragment extends Fragment {
                         boolean ce = task.getResult().getSignInMethods().isEmpty();
 
                         if (ce) {
+
                             CreateUserAuth(email, name, phone, CPassword);
                             dialog.show();
                         } else {
@@ -153,13 +234,12 @@ public class SignupFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    String Uid = task.getResult().getUser().getUid();
-                    UserModelClass userModelClass = new UserModelClass(Uid,name,email,phone,cPassword);
-                    reference.child("Users").child(Uid).setValue(userModelClass);
-                    Toast.makeText(getContext(), "auth successfully", Toast.LENGTH_SHORT).show();
-                    dialog.dismiss();
-                    getFragmentManager().beginTransaction().replace(R.id.auh_framlayout, new LoginFragment()).commit();
+                    Uid = task.getResult().getUser().getUid();
+                    addUser(email, name, phone, cPassword, Uid);
+
+
                 } else {
+                    dialog.dismiss();
                     Toast.makeText(getContext(), "Signup fail try agin", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -170,5 +250,53 @@ public class SignupFragment extends Fragment {
                 dialog.show();
             }
         });
+    }
+
+    private void addUser(String email, String name, String phone, String cPassword, String uid) {
+        ///image
+
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference imgreference = firebaseStorage.getReference("image1" + new Random().nextInt(50));
+        imgreference.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                imgreference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Users");
+                        UserModelClass userModelClass = new UserModelClass(uid, name, email, phone, cPassword, uri.toString());
+                        reference.child(uid).setValue(userModelClass);
+                        Toast.makeText(getContext(), "auth successfully", Toast.LENGTH_SHORT).show();
+                        getFragmentManager().beginTransaction().replace(R.id.auh_framlayout, new LoginFragment()).commit();
+                        dialog.dismiss();
+
+                    }
+                });
+
+            }
+        });
+
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            uri = data.getData();
+            try {
+                InputStream stream = getActivity().getContentResolver().openInputStream(uri);
+                bitmap = BitmapFactory.decodeStream(stream);
+                signupBinding.userProfileSign.setImageBitmap(bitmap);
+
+
+            } catch (Exception e) {
+
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
