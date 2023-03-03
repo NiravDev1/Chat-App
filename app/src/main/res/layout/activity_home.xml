@@ -4,14 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.HomeActivity">
+    tools:context=".Home.scratchcode.HomeActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/user_recyclerview"
+    <FrameLayout
+        android:id="@+id/main_framlayout_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         />
 
-
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottom_navi_view_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="10dp"
+        app:menu="@menu/menu"
+        android:background="@drawable/radius_layout"
+        app:labelVisibilityMode="labeled"
+        />
 
 </RelativeLayout>

@@ -11,8 +11,10 @@ public class InternetReceiver extends BroadcastReceiver {
         String status = CheckInternet.getNetworkinfo(context);
 
         if (status.equals("connected")) {
+
             Toast.makeText(context, "connected", Toast.LENGTH_SHORT).show();
         } else if (status.equals("Disconnected")) {
+
             Toast.makeText(context, "network disconnected", Toast.LENGTH_SHORT).show();
         }
 

@@ -1,7 +1,6 @@
 package com.example.mychat.Authentication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -10,23 +9,24 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 
-import com.example.mychat.Home.HomeActivity;
+import com.example.mychat.Home.scratchcode.HomeActivity;
 import com.example.mychat.R;
-import com.example.mychat.databinding.ActivityMainBinding;
+import com.example.mychat.databinding.ActivityAuthBinding;
+
 
 public class AuthActivity extends AppCompatActivity {
 
-    ActivityMainBinding binding;
+    ActivityAuthBinding binding;
     BroadcastReceiver broadcastReceiver=null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=ActivityMainBinding.inflate(getLayoutInflater());
+        binding=ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        getSupportActionBar().hide();
+
 
         SharedPreferences sharedPreferences=getSharedPreferences("auth",MODE_PRIVATE);
-        Intent intent;
+
         boolean check=sharedPreferences.getBoolean("flag",false);
 
         if (check)

@@ -100,7 +100,7 @@ public class SignupFragment extends Fragment {
     String Name, Email, Phone, Password, CPassword;
     FirebaseAuth auth = FirebaseAuth.getInstance();
     Dialog dialog;
-    Uri uri;
+    Uri uri=null;
     Bitmap bitmap;
 
     String Uid = null;
@@ -186,6 +186,9 @@ public class SignupFragment extends Fragment {
                 Password = signupBinding.passwordSignup.getEditText().getText().toString().trim();
                 CPassword = signupBinding.confirmPasswordSignup.getEditText().getText().toString().trim();
 
+
+
+
                 if (Name.isEmpty() || Email.isEmpty() || Phone.isEmpty() || Password.isEmpty() || CPassword.isEmpty()) {
                     Toast.makeText(getContext(), "fill the filed", Toast.LENGTH_SHORT).show();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
@@ -269,8 +272,9 @@ public class SignupFragment extends Fragment {
                         UserModelClass userModelClass = new UserModelClass(uid, name, email, phone, cPassword, uri.toString());
                         reference.child(uid).setValue(userModelClass);
                         Toast.makeText(getContext(), "auth successfully", Toast.LENGTH_SHORT).show();
-                        getFragmentManager().beginTransaction().replace(R.id.auh_framlayout, new LoginFragment()).commit();
+                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.auh_framlayout,new LoginFragment()).commit();
                         dialog.dismiss();
+
 
                     }
                 });

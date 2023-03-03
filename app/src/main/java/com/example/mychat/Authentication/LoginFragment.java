@@ -17,7 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.mychat.Home.HomeActivity;
+import com.example.mychat.Home.scratchcode.HomeActivity;
 import com.example.mychat.R;
 import com.example.mychat.databinding.FragmentLoginBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -138,13 +138,18 @@ public class LoginFragment extends Fragment {
         auth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
             @Override
             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
-                boolean ce = task.getResult().getSignInMethods().isEmpty();
-                if (ce) {
-                    Toast.makeText(getContext(), "This email is new please create new account", Toast.LENGTH_SHORT).show();
-                } else {
-                    UserLogin(email, password);
-                    dialog.show();
+                try {
+                    boolean ce = task.getResult().getSignInMethods().isEmpty();
+                    if (ce) {
+                        Toast.makeText(getContext(), "This email is new please create new account", Toast.LENGTH_SHORT).show();
+                    } else {
+                        UserLogin(email, password);
+                        dialog.show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Error::" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
