@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+       <de.hdodenhof.circleimageview.CircleImageView
+           android:id="@+id/users_profile_card"
+           android:layout_width="50dp"
+           android:layout_height="50dp"
+           android:src="@drawable/baseline_person_24"
+           android:layout_centerVertical="true"
+           android:layout_marginStart="5dp"
+           app:civ_circle_background_color="#6a7175"
+           />
+        <TextView
+            android:id="@+id/users_name_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textColor="@color/black"
+            android:layout_toRightOf="@id/users_profile_card"
+            android:layout_marginTop="10dp"
+            android:textSize="18dp"
+            android:fontFamily="@font/opensans_bold"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#8E8E8E"
+            android:layout_alignParentBottom="true"
+            android:clipToOutline="true"
+            />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
