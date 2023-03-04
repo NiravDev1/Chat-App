@@ -1,6 +1,8 @@
 package com.example.mychat.Authentication;
 
-public class UserModelClass {
+import java.util.Map;
+
+public class UserModelClass  {
     private String UserId,UserName,UserEmail,UserPhone,UserPassword,UserProfile;
 
     public UserModelClass(String userId, String userName, String userEmail, String userPhone, String userPassword, String userProfile) {
@@ -9,6 +11,12 @@ public class UserModelClass {
         UserEmail = userEmail;
         UserPhone = userPhone;
         UserPassword = userPassword;
+        UserProfile = userProfile;
+    }
+
+    public UserModelClass(String userName, String userPhone, String userProfile) {
+        UserName = userName;
+        UserPhone = userPhone;
         UserProfile = userProfile;
     }
 

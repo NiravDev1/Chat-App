@@ -189,7 +189,7 @@ public class SignupFragment extends Fragment {
 
 
 
-                if (Name.isEmpty() || Email.isEmpty() || Phone.isEmpty() || Password.isEmpty() || CPassword.isEmpty()) {
+                if (Name.isEmpty() || Email.isEmpty() || Phone.isEmpty() || Password.isEmpty() || CPassword.isEmpty()||uri==null) {
                     Toast.makeText(getContext(), "fill the filed", Toast.LENGTH_SHORT).show();
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(Email).matches()) {
                     Toast.makeText(getContext(), "valid Email ", Toast.LENGTH_SHORT).show();

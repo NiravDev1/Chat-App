@@ -16,6 +16,7 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:enableOnBackInvokedCallback="true"
+        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.MyChat"
         tools:targetApi="31">
         <activity
