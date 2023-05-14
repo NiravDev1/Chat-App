@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,8 +87,8 @@ public class UsersFragment extends Fragment {
         binding.usersRecylerviewId.setLayoutManager(new LinearLayoutManager(getContext()));
         auth = FirebaseAuth.getInstance();
         userModelClassArrayList = new ArrayList<>();
-//        String Uid=auth.getCurrentUser().getUid().toString();
-//        System.out.println(Uid);
+        String Uid=auth.getCurrentUser().getUid().toString();
+        System.out.println(Uid);
         userslistAdapter = new UserslistAdapter(getContext());
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
         databaseReference.keepSynced(true);
@@ -95,11 +96,10 @@ public class UsersFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    String Uid = dataSnapshot.getKey();
                     UserModelClass userModelClass = dataSnapshot.getValue(UserModelClass.class);
-                    System.out.println(dataSnapshot);
                     if (!Uid.equals(userModelClass.getUserId())) {
-                        userModelClassArrayList.add(userModelClass);
+                        userslistAdapter.adduser(userModelClass);
+                        Log.d("ALLDATA", "onDataChange: "+userModelClass);
                         userslistAdapter.notifyDataSetChanged();
                     }
                 }

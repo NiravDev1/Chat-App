@@ -23,13 +23,12 @@ public class MessageAdapter  extends RecyclerView.Adapter<MessageAdapter.Meassag
 
     public MessageAdapter(Context context) {
         this.context = context;
-        mgslist = mgslist=new ArrayList<>();
+        mgslist =new ArrayList<>();
     }
 
     public void add(MessegeModel messegeModel)
     {
         mgslist.add(messegeModel);
-
         notifyDataSetChanged();
     }
     public void clear()

@@ -57,6 +57,7 @@ public class ChatActivity extends AppCompatActivity {
                     MessegeModel messegeModel = dataSnapshot.getValue(MessegeModel.class);
                     System.out.println(snapshot);
                     messageAdapter.add(messegeModel);
+                    messageAdapter.notifyDataSetChanged();
                     binding.chatsRecycler.smoothScrollToPosition(messageAdapter.getItemCount());
 
                 }

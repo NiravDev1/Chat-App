@@ -23,7 +23,7 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding=ActivityAuthBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        getSupportActionBar().hide();
 
         SharedPreferences sharedPreferences=getSharedPreferences("auth",MODE_PRIVATE);
 

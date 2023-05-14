@@ -32,7 +32,7 @@ public class UserslistAdapter extends RecyclerView.Adapter<UserslistAdapter.user
     }
 
 
-    public void add(UserModelClass userModelClass)
+    public void adduser(UserModelClass userModelClass)
     {
         userModelClassList.add(userModelClass);
         notifyDataSetChanged();
@@ -63,8 +63,8 @@ public class UserslistAdapter extends RecyclerView.Adapter<UserslistAdapter.user
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, ChatActivity.class);
-                intent.putExtra("Userid",userModelClass.getUserId().toString());
-                intent.putExtra("Username",userModelClass.getUserName().toString());
+                intent.putExtra("Userid",userModelClass.getUserId());
+                intent.putExtra("Username",userModelClass.getUserName());
                 context.startActivity(intent);
             }
         });
