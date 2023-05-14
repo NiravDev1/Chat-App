@@ -3,16 +3,16 @@
 
     <item
         android:id="@+id/users_menu_id"
-        android:icon="@drawable/group"
-        android:title="Users" />
-    <item
-        android:id="@+id/chats_menu_id"
         android:icon="@drawable/chat"
         android:title="Chats" />
-    <item
-        android:id="@+id/call_menu_id"
-        android:icon="@drawable/telephone"
-        android:title="Call" />
+<!--    <item-->
+<!--        android:id="@+id/chats_menu_id"-->
+<!--        android:icon="@drawable/chat"-->
+<!--        android:title="Chats" />-->
+<!--    <item-->
+<!--        android:id="@+id/call_menu_id"-->
+<!--        android:icon="@drawable/telephone"-->
+<!--        android:title="Call" />-->
     <item
         android:id="@+id/setting_menu_id"
         android:icon="@drawable/settings"

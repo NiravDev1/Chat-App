@@ -1,5 +1,6 @@
 package com.example.mychat.Home.Users;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,16 +79,22 @@ public class UsersFragment extends Fragment {
     DatabaseReference databaseReference;
     ArrayList<UserModelClass> userModelClassArrayList;
     FirebaseAuth auth;
+    private Dialog dialog;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentUsersBinding.inflate(inflater, container, false);
+
+        dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.loadinglayout);
+        dialog.setCancelable(false);
+        dialog.show();
         binding.usersRecylerviewId.setLayoutManager(new LinearLayoutManager(getContext()));
         auth = FirebaseAuth.getInstance();
         userModelClassArrayList = new ArrayList<>();
-        String Uid=auth.getCurrentUser().getUid().toString();
+        String Uid = auth.getCurrentUser().getUid().toString();
         System.out.println(Uid);
         userslistAdapter = new UserslistAdapter(getContext());
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -98,8 +105,9 @@ public class UsersFragment extends Fragment {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     UserModelClass userModelClass = dataSnapshot.getValue(UserModelClass.class);
                     if (!Uid.equals(userModelClass.getUserId())) {
+                        dialog.dismiss();
                         userslistAdapter.adduser(userModelClass);
-                        Log.d("ALLDATA", "onDataChange: "+userModelClass);
+                        Log.d("ALLDATA", "onDataChange: " + userModelClass);
                         userslistAdapter.notifyDataSetChanged();
                     }
                 }
@@ -107,7 +115,7 @@ public class UsersFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                dialog.dismiss();
                 Toast.makeText(getContext(), "Error::" + error, Toast.LENGTH_SHORT).show();
             }
         });

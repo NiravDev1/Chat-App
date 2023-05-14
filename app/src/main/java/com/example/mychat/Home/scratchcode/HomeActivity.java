@@ -30,7 +30,7 @@ public class HomeActivity extends AppCompatActivity {
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.main_framlayout_id,new ChatsFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_framlayout_id,new UsersFragment()).commit();
         binding.mainBottomNaviViewId.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -41,12 +41,12 @@ public class HomeActivity extends AppCompatActivity {
                     case R.id.users_menu_id:
                         fragment=new UsersFragment();
                         break;
-                    case R.id.chats_menu_id:
-                        fragment=new ChatsFragment();
-                        break;
-                    case R.id.call_menu_id:
-                        fragment=new CallFragment();
-                        break;
+//                    case R.id.chats_menu_id:
+//                        fragment=new ChatsFragment();
+//                        break;
+//                    case R.id.call_menu_id:
+//                        fragment=new CallFragment();
+//                        break;
                     case R.id.setting_menu_id:
                         fragment=new SettingFragment();
                         break;
