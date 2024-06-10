@@ -114,7 +114,7 @@ Contributions are welcome! Here’s how you can contribute:
 
 For any queries or suggestions, feel free to reach out:
 
-- **LinkedIn**: [linkedin.com/in/nirav-luhar-a3a2491a9]
+- **LinkedIn**: (https://www.linkedin.com/in/nirav-luhar-a3a2491a9/)
 
 ## 📜 License
 
